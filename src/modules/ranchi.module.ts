@@ -1,3 +1,6 @@
+// HAHA f'king railway, doesnt read the enviroment variables.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config()
 import { Module } from '@nestjs/common';
 import { RanchiController } from './ranchi.controller';
 import { RanchiService } from './ranchi.service';
