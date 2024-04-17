@@ -18,7 +18,7 @@ import { LocationModule } from './location/location.module';
     EventModule,
     GeneticModule,
     LocationModule,
-    MongooseModule.forRoot(mongo.url ?? process.env.MONGO_URL),
+    MongooseModule.forRoot(process.env.MONGO_URL),
   ],
   controllers: [RanchiController],
   providers: [RanchiService],
