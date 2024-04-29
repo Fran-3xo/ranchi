@@ -23,4 +23,38 @@ export class EventService {
       throw e;
     }
   }
+
+  public async getEventByCattle(
+    cattleId: string,
+    farmId: string,
+  ): Promise<Event[]> {
+    try {
+      const events = await this.eventModel.find({
+        cattleId,
+        farmId,
+        deletedAt: null,
+      });
+      return events;
+    } catch (e) {
+      this.#logger.error(
+        `Cannot get event by cattleId: ${cattleId} error: ${JSON.stringify(e)}`,
+      );
+      throw e;
+    }
+  }
+
+  public async deleteEvent(eventId: string): Promise<Event> {
+    try {
+      const event = await this.eventModel.findOneAndUpdate(
+        { _id: eventId },
+        { deletedAt: new Date() },
+      );
+      return event;
+    } catch (e) {
+      this.#logger.error(
+        `Cannot delete event with id: ${eventId} error: ${JSON.stringify(e)}`,
+      );
+      throw e;
+    }
+  }
 }
