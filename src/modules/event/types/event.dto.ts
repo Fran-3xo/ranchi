@@ -1,23 +1,37 @@
-import { IsDefined, IsNotEmpty, IsString } from "class-validator";
+import {
+  IsDateString,
+  IsDefined,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class EventPayload {
   @IsString()
   @IsNotEmpty()
   @IsDefined()
-  caravan: string;
+  cattleId: string;
 
   @IsString()
   @IsNotEmpty()
   @IsDefined()
   eventType: string; //TODO: Cambiar a enum
 
-  @IsString()
+  @IsDateString()
   @IsNotEmpty()
   @IsDefined()
-  eventDetail: string;
+  eventDate: string;
 
   @IsString()
-  @IsNotEmpty()
-  @IsDefined()
-  observations: string;
+  @IsOptional()
+  eventDetail?: string;
+
+  @IsNumber()
+  @IsOptional()
+  measure?: number;
+
+  @IsString()
+  @IsOptional()
+  observations?: string;
 }
