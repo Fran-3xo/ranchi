@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Event } from 'src/schemas/event.schema';
 import { EventPayload } from './types/event.dto';
 
@@ -30,8 +30,8 @@ export class EventService {
   ): Promise<Event[]> {
     try {
       const events = await this.eventModel.find({
-        cattleId,
-        farmId,
+        cattleId: new mongoose.Types.ObjectId(cattleId),
+        farmId: new mongoose.Types.ObjectId(farmId),
         deletedAt: null,
       });
       return events;
