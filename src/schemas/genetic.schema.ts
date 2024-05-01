@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as SchemaMongoose } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Genetic extends Document {
@@ -9,8 +9,8 @@ export class Genetic extends Document {
   @Prop({ required: false, unique: false })
   description?: string;
 
-  @Prop({ required: true, unique: false })
-  farmId: string;
+  @Prop({ required: true, unique: false, type: SchemaMongoose.Types.ObjectId })
+  farmId: SchemaMongoose.Types.ObjectId;
 
   @Prop({ required: false, unique: false })
   deletedAt: Date;
