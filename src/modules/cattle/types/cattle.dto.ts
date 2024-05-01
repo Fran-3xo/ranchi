@@ -1,20 +1,21 @@
 import { IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Schema } from 'mongoose';
 
 export class CattlePayload {
   @IsString()
   @IsNotEmpty()
   @IsDefined()
-  geneticId: string;
+  geneticId: Schema.Types.ObjectId;
 
   @IsString()
   @IsNotEmpty()
   @IsDefined()
-  locationId: string;
+  locationId: Schema.Types.ObjectId;
 
   @IsString()
   @IsNotEmpty()
   @IsDefined()
-  farmId: string;
+  farmId: Schema.Types.ObjectId;
 
   @IsString()
   @IsNotEmpty()

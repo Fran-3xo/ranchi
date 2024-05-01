@@ -28,7 +28,7 @@ export class CattleController {
   @HttpCode(HttpStatus.OK)
   public async getCattleByFarmId(
     @Param('farmId') farmId: string,
-  ): Promise<CattlePayload[]> {
+  ): Promise<any[]> {
     return await this.cattleService.getCattleByFarmId(farmId);
   }
 

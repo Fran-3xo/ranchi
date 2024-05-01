@@ -1,21 +1,35 @@
 import { HydratedDocument } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema as SchemaMongoose } from 'mongoose';
+import { Cattle } from './cattle.schema';
+import { Farm } from './farm.schema';
+import { EventTypeEnum } from 'src/modules/event/types/event.dto';
 
 export type EventDocument = HydratedDocument<Event>;
 
 @Schema({ timestamps: true })
 export class Event {
-  @Prop({ required: true, unique: false })
-  cattleId: string;
+  @Prop({
+    required: true,
+    unique: false,
+    type: SchemaMongoose.Types.ObjectId,
+    ref: Cattle.name,
+  })
+  cattleId: SchemaMongoose.Types.ObjectId;
+
+  @Prop({
+    required: true,
+    unique: false,
+    type: SchemaMongoose.Types.ObjectId,
+    ref: Farm.name,
+  })
+  farmId: SchemaMongoose.Types.ObjectId;
 
   @Prop({ required: true, unique: false })
-  farmId: string;
+  eventType: EventTypeEnum;
 
   @Prop({ required: true, unique: false })
-  eventType: string;
-
-  @Prop({ required: true, unique: false })
-  eventDate: string;
+  eventDate: Date;
 
   @Prop({ required: false, unique: false })
   eventDetail?: string;
