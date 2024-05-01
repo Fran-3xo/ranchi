@@ -16,11 +16,11 @@ export enum CorporalConditionEnum {
 }
 
 export enum EventTypeEnum {
-  MEASURE = 'Body measure',
-  NOT_PREGNTANT = 'Not pregnant',
-  CATTLE_BIRTH = 'Cattle birth',
-  PREGNANT = 'Pregnant',
-  DEATH = 'Death',
+  MEASURE = 'body_measure',
+  NOT_PREGNTANT = 'not_pregnant',
+  CATTLE_BIRTH = 'cattle_birth',
+  PREGNANT = 'pregnant',
+  DEATH = 'death',
 }
 
 export class EventPayload {
