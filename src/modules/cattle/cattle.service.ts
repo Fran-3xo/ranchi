@@ -49,7 +49,7 @@ export class CattleService {
           );
 
           let state = '';
-          let bodyCondition = '';
+          let bodyCondition = 0;
 
           // If the cattle has events, sort them by date
           if (events.length) {
@@ -81,7 +81,7 @@ export class CattleService {
             createdAt: cattle.createdAt,
             updatedAt: cattle.updatedAt,
             state,
-            bodyCondition,
+            bodyCondition: bodyCondition ?? null,
           };
         }),
       );
@@ -98,26 +98,26 @@ export class CattleService {
   private getCattleStatus(type: EventTypeEnum): string {
     switch (type) {
       case EventTypeEnum.CATTLE_BIRTH:
-        return 'gestante';
+        return EventTypeEnum.CATTLE_BIRTH;
       case EventTypeEnum.NOT_PREGNTANT:
-        return 'no gestante';
+        return EventTypeEnum.NOT_PREGNTANT;
       case EventTypeEnum.DEATH:
-        return 'muerte';
+        return EventTypeEnum.DEATH;
       case EventTypeEnum.PREGNANT:
-        return 'gestante';
+        return EventTypeEnum.PREGNANT;
       default:
         return 'no gestante';
     }
   }
 
-  private async getCorporalCondition(events: Event[]): Promise<string> {
+  private async getCorporalCondition(events: Event[]): Promise<number> {
     try {
       // Find the last body measurement event
       const lastBodyMeasurementEvent = events.find(
         (event) => event.eventType === EventTypeEnum.MEASURE,
       );
       if (lastBodyMeasurementEvent) {
-        return lastBodyMeasurementEvent.eventDetail;
+        return lastBodyMeasurementEvent.measure;
       }
       return null;
     } catch (e) {
