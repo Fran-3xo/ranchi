@@ -31,6 +31,7 @@ export class CattleService {
 
   public async getCattleByFarmId(farmId: string): Promise<any[]> {
     try {
+      // Find all cattles by farmId
       const cattles = await this.cattleModel
         .find({
           farmId: new mongoose.Types.ObjectId(farmId),
@@ -38,9 +39,10 @@ export class CattleService {
         .populate('geneticId', 'name')
         .populate('locationId', 'name');
 
+      // Create a promise to get all the events for each cattle
       const formatedCattles = await Promise.all(
         cattles.map(async (cattle: any) => {
-          // Obtener los eventos para este ganado
+          // Get all events for the current cattle
           const events = await this.eventService.getEventByCattle(
             cattle._id,
             farmId,
@@ -49,22 +51,23 @@ export class CattleService {
           let state = '';
           let bodyCondition = '';
 
+          // If the cattle has events, sort them by date
           if (events.length) {
             events.sort(
               (a, b) => b.eventDate.getTime() - a.eventDate.getTime(),
             );
 
-            // Obtener el último evento de tipo body measure
+            // Get the last event that is not a body measure event
             const lastBodyMeasureEvent = events.find(
               (event) => event.eventType !== EventTypeEnum.MEASURE,
             );
 
             const lastEvent = lastBodyMeasureEvent || events[0];
 
-            // Determinar el estado del animal
+            // Get the status of the cattle
             state = this.getCattleStatus(lastEvent.eventType);
 
-            // Determinar el estado corporal
+            // Get the body condition of the cattle
             bodyCondition = await this.getCorporalCondition(events);
           }
 
@@ -107,7 +110,7 @@ export class CattleService {
     }
   }
 
-  private async getCorporalCondition(events: Event[]) {
+  private async getCorporalCondition(events: Event[]): Promise<string> {
     try {
       // Find the last body measurement event
       const lastBodyMeasurementEvent = events.find(
