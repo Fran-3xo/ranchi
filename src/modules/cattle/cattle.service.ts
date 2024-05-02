@@ -106,7 +106,7 @@ export class CattleService {
       case EventTypeEnum.PREGNANT:
         return EventTypeEnum.PREGNANT;
       default:
-        return 'no gestante';
+        return EventTypeEnum.NOT_PREGNTANT;
     }
   }
 
