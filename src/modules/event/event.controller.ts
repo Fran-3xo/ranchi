@@ -22,7 +22,7 @@ export class EventController {
     return await this.eventService.createEvent(event);
   }
 
-  @Get('/event/:cattleId/:farmId')
+  @Get('/:cattleId/:farmId')
   @HttpCode(HttpStatus.OK)
   public async getEventByCattle(
     @Param('cattleId') cattleId: string,
